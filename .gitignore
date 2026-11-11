@@ -1,0 +1,6 @@
+.nextflow*
+work/
+results*/
+benchmark_run/
+.DS_Store
+*.pyc

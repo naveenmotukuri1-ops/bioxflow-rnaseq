@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Test dataset (${{ matrix.nxf }}, docker)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        nxf: ['25.04.0', 'latest-stable']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: nf-core/setup-nextflow@v2
+        with:
+          version: ${{ matrix.nxf }}
+
+      - name: Run pipeline on the bundled test data
+        run: nextflow run . -profile test,docker --outdir results_test
+
+      - name: Check outputs against the simulated truth
+        run: |
+          pip install numpy
+          test -s results_test/multiqc/multiqc_report.html
+          test -s results_test/concordance/concordance_summary.tsv
+          test -s results_test/differential_expression/treated_vs_control.deseq2_results.tsv
+          python3 benchmark/evaluate.py --truth assets/testdata --results results_test | tee evaluation.md
+          cat evaluation.md >> "$GITHUB_STEP_SUMMARY"
+          # every sample must pass the Salmon-vs-STAR concordance gate
+          ! grep -q REVIEW results_test/concordance/concordance_summary.tsv
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results-${{ matrix.nxf }}
+          path: |
+            results_test/multiqc/multiqc_report.html
+            results_test/concordance
+            results_test/differential_expression
+            results_test/pipeline_info
+            .nextflow.log

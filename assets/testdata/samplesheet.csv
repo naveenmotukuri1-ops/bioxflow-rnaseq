@@ -1,0 +1,7 @@
+sample,fastq_1,fastq_2,condition
+control_rep1,control_rep1_R1.fastq.gz,control_rep1_R2.fastq.gz,control
+control_rep2,control_rep2_R1.fastq.gz,control_rep2_R2.fastq.gz,control
+control_rep3,control_rep3_R1.fastq.gz,control_rep3_R2.fastq.gz,control
+treated_rep1,treated_rep1_R1.fastq.gz,treated_rep1_R2.fastq.gz,treated
+treated_rep2,treated_rep2_R1.fastq.gz,treated_rep2_R2.fastq.gz,treated
+treated_rep3,treated_rep3_R1.fastq.gz,treated_rep3_R2.fastq.gz,treated
