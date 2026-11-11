@@ -70,7 +70,57 @@ Notes:
 
 ## Full yeast genome
 
-Run `bash benchmark/run_benchmark.sh <profile>` to reproduce: 6 samples of about 500,000
-read pairs (2 x 100 bp) over the whole R64-1-1 genome.
+Reproduce with `bash benchmark/run_benchmark.sh <profile>`. Whole *S. cerevisiae* R64-1-1
+genome (Ensembl release 112), 6,531 expressed genes, 2 conditions x 3 replicates, about
+440,000 to 690,000 read pairs of 2 x 100 bp per sample, 980 genes truly differential
+(|log2FC| between 1 and 3). Run on macOS (Apple Silicon, 8 GB RAM) with the `conda` profile.
 
-Results will be added here.
+## Quantification accuracy (estimated vs true gene counts)
+
+| Sample | Method | Genes | Spearman | Pearson (log2) | Mean abs. rel. error |
+|---|---|---|---|---|---|
+| control_rep1 | Salmon | 6531 | 0.9768 | 0.9612 | 3.52% |
+| control_rep2 | Salmon | 6531 | 0.9752 | 0.9584 | 4.37% |
+| control_rep3 | Salmon | 6531 | 0.9741 | 0.9605 | 3.40% |
+| treated_rep1 | Salmon | 6531 | 0.9757 | 0.9622 | 3.73% |
+| treated_rep2 | Salmon | 6531 | 0.9760 | 0.9638 | 3.54% |
+| treated_rep3 | Salmon | 6531 | 0.9772 | 0.9620 | 4.27% |
+| control_rep1 | STAR | 6531 | 0.9225 | 0.8814 | 5.51% |
+| control_rep2 | STAR | 6531 | 0.9229 | 0.8847 | 5.39% |
+| control_rep3 | STAR | 6531 | 0.9223 | 0.8895 | 5.37% |
+| treated_rep1 | STAR | 6531 | 0.9244 | 0.8909 | 5.49% |
+| treated_rep2 | STAR | 6531 | 0.9239 | 0.8943 | 5.44% |
+| treated_rep3 | STAR | 6531 | 0.9247 | 0.8896 | 5.51% |
+
+## Differential expression accuracy
+
+| Metric | Value |
+|---|---|
+| Genes simulated | 6531 |
+| Genes tested after low-count filtering | 5229 |
+| Truly differential genes (all / tested) | 980 / 818 |
+| Genes called at padj < 0.05 | 752 |
+| True positives | 728 |
+| False positives | 24 |
+| Sensitivity (of all truly differential genes) | 74.3% |
+| Observed false discovery rate | 3.2% |
+| True positives with the wrong direction | 0 |
+| log2FC Pearson r, estimate vs truth | 0.8980 |
+| log2FC Pearson r, shrunken estimate vs truth | 0.9202 |
+| log2FC RMSE, estimate | 0.398 |
+| log2FC RMSE, shrunken estimate | 0.327 |
+
+Salmon-vs-STAR concordance (the pipeline's own quality gate) was 0.916 to 0.922 Spearman
+for all six samples, both methods inferred a reverse-stranded library, and every sample
+passed.
+
+Notes:
+
+* The observed false discovery rate (3.2%) is below the 5% that was asked for, so the
+  calls are not over-confident on this data.
+* Sensitivity is counted over all 980 truly differential genes, including 162 that were
+  expressed too weakly at this depth to be tested at all. Among the 818 tested, 89% were found.
+* No gene was called in the wrong direction. Shrunken fold changes were closer to the truth
+  than the raw estimates (RMSE 0.33 vs 0.40).
+* STAR counts agree less well with the truth than Salmon counts. The yeast annotation has
+  many overlapping genes, and STAR sets aside reads that it cannot assign to one gene.
