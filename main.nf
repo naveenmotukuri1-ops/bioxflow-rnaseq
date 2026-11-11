@@ -4,7 +4,7 @@
  * Bulk RNA-seq: dual-evidence quantification (Salmon + STAR), cross-method
  * concordance checks and DESeq2 differential expression.
  *
- * https://www.bioxflow.uk
+ * https://www.bioxflow.co.uk
  */
 
 include { RNASEQ } from './workflows/rnaseq'

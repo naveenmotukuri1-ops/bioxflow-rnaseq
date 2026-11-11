@@ -4,7 +4,7 @@
 [![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A525.04-18b6a4.svg)](https://www.nextflow.io)
 [![License: MIT](https://img.shields.io/badge/license-MIT-0e1b2b.svg)](LICENSE)
 
-A bulk RNA-seq pipeline from [Bioxflow](https://www.bioxflow.uk) that goes from FASTQ files to
+A bulk RNA-seq pipeline from [Bioxflow](https://www.bioxflow.co.uk) that goes from FASTQ files to
 differential expression, and checks its own answer on the way.
 
 **What is different about it:** every sample is quantified twice, by two methods that share
@@ -118,5 +118,5 @@ pipeline and is not an nf-core pipeline.
 
 ## Contributing
 
-Issues and pull requests are welcome. See [www.bioxflow.uk](https://www.bioxflow.uk) for the
+Issues and pull requests are welcome. See [www.bioxflow.co.uk](https://www.bioxflow.co.uk) for the
 community and the other Bioxflow pipelines.

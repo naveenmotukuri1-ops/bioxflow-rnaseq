@@ -111,3 +111,11 @@ params.max_memory = '120.GB'
 Every tool version is pinned. `results/pipeline_info/` records the software versions, the
 execution trace and a full run report, and `differential_expression/R_sessionInfo.txt`
 records the R package versions. Pin the pipeline itself with `-r <tag or commit>`.
+
+## 6. Troubleshooting
+
+**`there is no package called 'GenomeInfoDbData'` with `-profile conda` or `mamba`.**
+This Bioconductor data package is downloaded by a conda post-install step that sometimes
+fails silently. Remove the R environment from the conda cache (`work/conda/` by default, or
+`$NXF_CONDA_CACHEDIR`) and re-run with `-resume` so it is created again. The container
+profiles are not affected.
