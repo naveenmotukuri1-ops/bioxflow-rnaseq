@@ -32,7 +32,7 @@ Strandedness is not a column: it is inferred from the data by two methods and re
 ## 3. Run
 
 ```bash
-nextflow run naveenmotukuri1-ops/bioxflow-rnaseq -profile docker \
+nextflow run bioxflow/rnaseq -profile docker \
     --input samplesheet.csv \
     --fasta Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz \
     --gtf Homo_sapiens.GRCh38.112.gtf.gz \
@@ -65,7 +65,7 @@ quantification from STAR.
 
 ## 4. Parameters
 
-Run `nextflow run naveenmotukuri1-ops/bioxflow-rnaseq --help` for the full list.
+Run `nextflow run bioxflow/rnaseq --help` for the full list.
 
 ### Differential expression
 

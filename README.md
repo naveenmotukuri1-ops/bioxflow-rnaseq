@@ -1,6 +1,6 @@
 # bioxflow/rnaseq
 
-[![CI](https://github.com/naveenmotukuri1-ops/bioxflow-rnaseq/actions/workflows/ci.yml/badge.svg)](https://github.com/naveenmotukuri1-ops/bioxflow-rnaseq/actions/workflows/ci.yml)
+[![CI](https://github.com/bioxflow/rnaseq/actions/workflows/ci.yml/badge.svg)](https://github.com/bioxflow/rnaseq/actions/workflows/ci.yml)
 [![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A525.04-18b6a4.svg)](https://www.nextflow.io)
 [![License: MIT](https://img.shields.io/badge/license-MIT-0e1b2b.svg)](LICENSE)
 
@@ -49,13 +49,13 @@ Install [Nextflow](https://www.nextflow.io) (25.04 or newer) and Docker, Singula
 Run the bundled test data first (about 5 minutes):
 
 ```bash
-nextflow run naveenmotukuri1-ops/bioxflow-rnaseq -profile test,docker
+nextflow run bioxflow/rnaseq -profile test,docker
 ```
 
 Then your own data:
 
 ```bash
-nextflow run naveenmotukuri1-ops/bioxflow-rnaseq -profile docker \
+nextflow run bioxflow/rnaseq -profile docker \
     --input samplesheet.csv --fasta genome.fa.gz --gtf genes.gtf.gz --outdir results
 ```
 
